@@ -5,3 +5,4 @@ Part of the Complete C++ UE4 Tutorial from BenTristem on UDEMY.
 
 ## Lecture List
 BT01 Intro, Notes & Assets
+BT02 Setting up a GitHub Repo
