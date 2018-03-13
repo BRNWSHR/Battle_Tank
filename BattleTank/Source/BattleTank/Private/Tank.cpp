@@ -18,11 +18,17 @@ void ATank::BeginPlay()
 	
 }
 
+
+
 // Called every frame
 void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ATank::AimAt(FVector HitLocation)
+{
 }
 
 // Called to bind functionality to input
