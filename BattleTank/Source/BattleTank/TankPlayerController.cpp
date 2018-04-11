@@ -37,9 +37,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; //Out Parameter
 	if (GetSightRayLocation(HitLocation)) // Has "side-effect", is going to line trace
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation : %s"), *HitLocation.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("HitLocation : %s"), *HitLocation.ToString()); call on AimAt Method from Pawn
 		GetControlledTank()->AimAt(HitLocation);
-		//TODO Tell controlled Tank to aim at this point
 	}
 }
 
@@ -67,14 +66,14 @@ bool ATankPlayerController::GetSightRayLocation(FVector& OutHitLocation) const
 	return true;
 }
 
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+bool ATankPlayerController::GetLookDirection(FVector2D OutScreenLocation, FVector& OutLookDirection) const
 {
 	FVector CameraWorldLocation; // to be discarded
 	return DeprojectScreenPositionToWorld(
-		ScreenLocation.X,
-		ScreenLocation.Y,
+		OutScreenLocation.X,
+		OutScreenLocation.Y,
 		CameraWorldLocation,
-		LookDirection
+		OutLookDirection
 	); // return true if calculation is possible
 }
 
