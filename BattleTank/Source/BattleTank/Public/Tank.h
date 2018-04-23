@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTankBarrel; // Forward Declaration
+// Forward Declaration
+class UTankBarrel; 
+class UTankAimingComponent;
+class UTankTurret;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -19,6 +21,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetBarrelReference(UTankBarrel* BarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void SetTurretReference(UTankTurret* TurretToSet);
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
@@ -26,9 +30,6 @@ protected:
 private:
 	// Sets default values for this pawn's properties
 	ATank();
-	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,7 +39,7 @@ private:
 
 	//Represent the initial speed of the projectile
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.0; //TODO find Sensible value
+	float LaunchSpeed = 10.0; //TODO find Sensible value
 
 
 	

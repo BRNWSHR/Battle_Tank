@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Engine/World.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
 /**
  * 
  */
+
+class ATank; // Forward declaration
+
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
