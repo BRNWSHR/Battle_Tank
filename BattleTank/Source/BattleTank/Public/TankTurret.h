@@ -20,7 +20,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxDegreesPerSecond = 10; //TODO Sensible Value
+	float MaxDegreesPerSecond = 25; //Sensible Value
 	
 	
 	

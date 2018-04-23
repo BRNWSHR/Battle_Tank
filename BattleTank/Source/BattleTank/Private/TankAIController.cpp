@@ -22,7 +22,7 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto ControlledTank = GetControlledTank();
+	/*auto ControlledTank = GetControlledTank();
 	if (!ControlledTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("ERROR in TankAIController : NO TANK POSSESSED"));
@@ -39,7 +39,7 @@ void ATankAIController::BeginPlay()
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController found Player : %s"), *PlayerTank->GetName());
-	}
+	}*/
 	
 }
 
