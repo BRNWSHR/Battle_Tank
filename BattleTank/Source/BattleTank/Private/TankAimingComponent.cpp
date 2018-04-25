@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "Classes/Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
 

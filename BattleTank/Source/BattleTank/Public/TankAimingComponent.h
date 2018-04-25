@@ -3,15 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Classes/Kismet/GameplayStatics.h"
 #include "TankAimingComponent.generated.h"
 
 
 // Forward Declaration
+class UActorComponent;
 class UTankBarrel; 
 class UTankTurret;
+
 
 // Holds barrel's properties
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

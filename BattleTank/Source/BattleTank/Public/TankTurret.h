@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Classes/Engine/World.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankTurret.generated.h"
 
 /**
  * 
  */
+class UWorld;
+
 UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 {
