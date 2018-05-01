@@ -23,8 +23,7 @@ private :
 		virtual void  Tick(float DeltaTime) override;
 		virtual void  BeginPlay() override;
 
-		ATank* GetControlledTank() const;
-		ATank* GetPlayerTank() const;
-	
+		//How close the AI Tank can approach the player
+		float AcceptanceRadius = 3000;
 	
 };

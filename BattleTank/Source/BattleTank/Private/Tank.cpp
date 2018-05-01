@@ -3,6 +3,7 @@
 #include "Tank.h"
 #include "Engine/World.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "TankProjectile.h"
@@ -44,15 +45,21 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Fire Button pressed"))
+	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeinSeconds;
 
-	if (!Barrel) { return; }
-	//Spawn a projectile at the socket of muzzle
-	GetWorld()->SpawnActor<ATankProjectile>(
-		ProjectileBP,
-		Barrel->GetSocketLocation(FName("Barrel_Muzzle")),
-		Barrel->GetSocketRotation(FName("Barrel_Muzzle"))
-		);
+	if (Barrel && bIsReloaded) 
+	{
+		//Spawn a projectile at the socket of muzzle
+		auto ProjectileFired = GetWorld()->SpawnActor<ATankProjectile>(
+			ProjectileBP,
+			Barrel->GetSocketLocation(FName("Barrel_Muzzle")),
+			Barrel->GetSocketRotation(FName("Barrel_Muzzle"))
+			);
+
+		ProjectileFired->LaunchProjectile(5000);
+		LastFireTime = FPlatformTime::Seconds();
+	}
+
 }
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
