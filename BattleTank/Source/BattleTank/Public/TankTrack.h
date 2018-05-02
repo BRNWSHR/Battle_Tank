@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Le Saut A Pixels.
 
 #pragma once
 
@@ -16,11 +16,11 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	
 public:
 	//Sets a throttle between -1 and +1
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
 	//This is max force per track in Newtons
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float TrackMaxDrivingForce = 977900;
 	
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Le Saut A Pixels.
 
 #pragma once
 
@@ -21,9 +21,11 @@ public :
 		
 		virtual void Tick( float DeltaTime ) override;
 
-private:
-
+protected : 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank * GetControlledTank() const;
+
+private:
 
 	//Start the tank moving the barrel/turret so that the shot would hit where the crosshair intersect the world
 	void AimTowardsCrosshair();
