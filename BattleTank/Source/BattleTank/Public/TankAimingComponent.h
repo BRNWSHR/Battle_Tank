@@ -31,8 +31,6 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	UTankBarrel* GetBarrelReference();
-
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
@@ -44,13 +42,24 @@ public:
 protected:
 	//for Enum EFiringState initialisation, protected to be callable in subclasses
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Locked;
+	EFiringState FiringState = EFiringState::Reloading;
+
 private: 
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	virtual void BeginPlay() override;
+
+	void MoveBarrelAndTurretTowards(FVector AimDirection);
+
+	//Logic to check if Barrel is in aiming sate (EFiringState)
+	bool IsBarrelMoving();
+
+	//Global to be callable from different methods
+	FVector AimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<ATankProjectile> ProjectileBP;
-
-	void MoveBarrelAndTurretTowards(FVector AimDirection);
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
