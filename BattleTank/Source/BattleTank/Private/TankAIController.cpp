@@ -22,7 +22,7 @@ void ATankAIController::Tick(float DeltaTime)
 		AimingComponent->AimAt(PlayerTank->GetActorLocation()); //Aim using location returned from AI Functions
 
 		//Fire if ready
-		//ControlledTank->Fire(); //TODO Limit Fire Rate & REFACTOR
+		AimingComponent->Fire();
 	
 }
 
