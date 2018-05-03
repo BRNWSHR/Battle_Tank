@@ -11,7 +11,6 @@
  */
  //Forward declaration
 class UWorld;
-class ATank; 
 
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController

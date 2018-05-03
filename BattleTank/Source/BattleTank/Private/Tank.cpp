@@ -2,7 +2,6 @@
 
 #include "Tank.h"
 #include "Engine/World.h"
-#include "TankAimingComponent.h"
 #include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
@@ -21,14 +20,6 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed to run BP BeginPlay !
 	UE_LOG(LogTemp, Warning, TEXT("DONKEY : Tank C++ BeginPlay Initialized"))
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
