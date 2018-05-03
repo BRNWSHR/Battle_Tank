@@ -23,7 +23,7 @@ public:
 	void IntendTurnRight(float Throw);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialise(UTankTrack * LeftTrackToSet, UTankTrack * RightTrackToSet);
+	void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
 	
 

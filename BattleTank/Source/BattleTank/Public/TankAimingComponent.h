@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/StaticMeshComponent.h"
+#include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
 
@@ -16,13 +16,12 @@ enum class EFiringState : uint8
 };
 
 // Forward Declaration
-class UActorComponent;
 class UTankBarrel; 
 class UTankTurret;
 
 
 // Holds barrel's properties
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -31,15 +30,17 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	UTankBarrel* GetBarrelReference();
+
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	void SetTurretReference(UTankTurret* BarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UTankTurret * TurretToSet, UTankBarrel * BarrelToSet);
 
 protected:
 	//for Enum EFiringState initialisation, protected to be callable in subclasses
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Reloading;
+	EFiringState FiringState = EFiringState::Locked;
 
 private: 
 
