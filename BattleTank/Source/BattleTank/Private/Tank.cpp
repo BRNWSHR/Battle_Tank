@@ -21,6 +21,8 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed to run BP BeginPlay !
 	UE_LOG(LogTemp, Warning, TEXT("DONKEY : Tank C++ BeginPlay Initialized"))
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATank::AimAt(FVector HitLocation)
@@ -32,7 +34,6 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::Fire()
 {
 	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeinSeconds;
-	/*auto Barrel = TankAimingComponent->GetBarrelReference();
 
 	if (!ensure(Barrel)) { return; }
 
@@ -47,5 +48,5 @@ void ATank::Fire()
 
 		ProjectileFired->LaunchProjectile(5000);
 		LastFireTime = FPlatformTime::Seconds();
-	}*/
+	}
 }

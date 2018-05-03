@@ -46,6 +46,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeinSeconds = 3;
 
+	UTankBarrel* Barrel = nullptr;
+
 	double LastFireTime = 0;
 	
 	
