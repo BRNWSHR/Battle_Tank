@@ -34,7 +34,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeinSeconds)
+	if (AmmoRounds <= 0)
+	{
+			FiringState = EFiringState::OutOfAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeinSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 	}
@@ -47,6 +51,17 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 		FiringState = EFiringState::Locked;
 	}
 	
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
+
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return AmmoRounds;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -76,8 +91,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	}
 }
 
-
-
 void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection)
 {
 	if (!ensure(Barrel) && !ensure(Turret)) { return; }
@@ -88,7 +101,7 @@ void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection)
 
 
 	 Barrel->Elevate(DeltaRotator.Pitch);
-	if (FMath::Abs<float>(DeltaRotator.Yaw < 180))
+	if (FMath::Abs<float>(DeltaRotator.Yaw) < 180)
 	{
 		Turret->Rotate(DeltaRotator.Yaw);
 	}
@@ -99,16 +112,20 @@ void UTankAimingComponent::Fire()
 {
 	if (FiringState != EFiringState::Reloading)
 	{
-		if (!ensure(Barrel) && !ensure(ProjectileBP)) { return; }
-		//Spawn a projectile at the socket of muzzle
-		auto ProjectileFired = GetWorld()->SpawnActor<ATankProjectile>(
-			ProjectileBP,
-			Barrel->GetSocketLocation(FName("Barrel_Muzzle")),
-			Barrel->GetSocketRotation(FName("Barrel_Muzzle"))
-			);
+		if (FiringState!= EFiringState::OutOfAmmo)
+		{ 
+			if (!ensure(Barrel) && !ensure(ProjectileBP)) { return; }
+			//Spawn a projectile at the socket of muzzle
+			auto ProjectileFired = GetWorld()->SpawnActor<ATankProjectile>(
+				ProjectileBP,
+				Barrel->GetSocketLocation(FName("Barrel_Muzzle")),
+				Barrel->GetSocketRotation(FName("Barrel_Muzzle"))
+				);
 
-		ProjectileFired->LaunchProjectile(5000);
-		LastFireTime = FPlatformTime::Seconds();
+			ProjectileFired->LaunchProjectile(5000);
+			AmmoRounds--;
+			LastFireTime = FPlatformTime::Seconds();
+		}
 	}
 }
 
