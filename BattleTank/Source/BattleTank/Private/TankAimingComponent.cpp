@@ -36,7 +36,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 	if (AmmoRounds <= 0)
 	{
-			FiringState = EFiringState::OutOfAmmo;
+		FiringState = EFiringState::OutOfAmmo;
 	}
 	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeinSeconds)
 	{
@@ -59,7 +59,7 @@ EFiringState UTankAimingComponent::GetFiringState() const
 }
 
 
-int UTankAimingComponent::GetRoundsLeft() const
+int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return AmmoRounds;
 }

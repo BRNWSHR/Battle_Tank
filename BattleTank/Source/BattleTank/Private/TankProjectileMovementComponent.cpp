@@ -7,5 +7,3 @@ UTankProjectileMovementComponent::UTankProjectileMovementComponent()
 	//setting defaults
 	bAutoActivate = false;
 }
-
-

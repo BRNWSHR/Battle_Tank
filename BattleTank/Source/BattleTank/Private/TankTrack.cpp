@@ -21,7 +21,6 @@ void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, 
 	DriveTrack();
 	ApplySidewaysForce();
 	CurrentThrottle = 0; //Reset throttle each frame to be sure about player / AI intentions
-	
 }
 
 void UTankTrack::SetThrottle(float Throttle)
