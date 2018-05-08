@@ -2,10 +2,13 @@
 
 #include "TankProjectile.h"
 #include "Engine/World.h"
-#include "TankProjectileMovementComponent.h"
+#include "Classes/Kismet/GameplayStatics.h"
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Public/TimerManager.h"
+#include "TankProjectileMovementComponent.h"
+
 
 // Sets default values
 ATankProjectile::ATankProjectile()
@@ -45,6 +48,26 @@ void ATankProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherAc
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		DamageAmount,
+		GetActorLocation(),
+		ExplosionForce->Radius, //for consistency
+		UDamageType::StaticClass(),
+		TArray<AActor*>() //damage all actors
+	);
+
+	FTimerHandle DestroyTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &ATankProjectile::DestroyProjectile, DestroyDelay, false);
+}
+
+void ATankProjectile::DestroyProjectile()
+{
+	Destroy();
 }
 
 void ATankProjectile::LaunchProjectile(float Speed)

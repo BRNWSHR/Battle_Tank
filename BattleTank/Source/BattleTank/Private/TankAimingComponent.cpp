@@ -122,7 +122,7 @@ void UTankAimingComponent::Fire()
 				Barrel->GetSocketRotation(FName("Barrel_Muzzle"))
 				);
 
-			ProjectileFired->LaunchProjectile(5000);
+			ProjectileFired->LaunchProjectile(LaunchSpeed);
 			AmmoRounds--;
 			LastFireTime = FPlatformTime::Seconds();
 		}
@@ -133,5 +133,5 @@ bool UTankAimingComponent::IsBarrelMoving()
 {
 	if (!ensure(Barrel)) { return false; }
 	auto BarrelForward = Barrel->GetForwardVector();
-	return (!BarrelForward.Equals(AimDirection,0.01));
+	return (!BarrelForward.Equals(AimDirection,0.1));
 }

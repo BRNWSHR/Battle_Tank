@@ -32,6 +32,13 @@ private:
 	//Start the tank moving the barrel/turret so that the shot would hit where the crosshair intersect the world
 	void AimTowardsCrosshair();
 
+	//Overriding for delegation initialisation
+	virtual void SetPawn(APawn* InPawn) override;
+
+	//Delegates
+	UFUNCTION()
+	void OnTankDeath();
+
 	bool GetSightRayLocation(FVector& OutHitLocation) const;
 
 	bool GetLookDirection(FVector2D OutScreenLocation, FVector & OutLookDirection) const;

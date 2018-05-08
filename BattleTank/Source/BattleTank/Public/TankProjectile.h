@@ -38,6 +38,14 @@ private:
 			FVector NormalImpulse,
 			const FHitResult& Hit);
 
+	void DestroyProjectile();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 10; //sensible value to tweak eventually
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DamageAmount = 20.f; //sensible value
+
 	UTankProjectileMovementComponent* ProjectileMovement = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Collision")
