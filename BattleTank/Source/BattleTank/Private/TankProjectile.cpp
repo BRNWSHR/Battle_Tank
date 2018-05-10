@@ -56,7 +56,7 @@ void ATankProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherAc
 		this,
 		DamageAmount,
 		GetActorLocation(),
-		ExplosionForce->Radius, //for consistency
+		DamageRadius, //modified for more realistic hit, was before corresponding to explosion force radius
 		UDamageType::StaticClass(),
 		TArray<AActor*>() //damage all actors
 	);

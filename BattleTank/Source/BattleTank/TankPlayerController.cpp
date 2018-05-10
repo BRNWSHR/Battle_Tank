@@ -2,7 +2,6 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
-#include "GameFramework/PlayerController.h"
 #include "Tank.h"
 #include "TankAimingComponent.h"
 
@@ -38,6 +37,7 @@ void ATankPlayerController::SetPawn(APawn * InPawn)
 void ATankPlayerController::OnTankDeath()
 {
 	auto TankName = GetPawn()->GetName();
+	StartSpectatingOnly();
 	UE_LOG(LogTemp, Warning, TEXT("%s : Yeah, I'm Dead... "), *TankName)
 }
 
@@ -97,7 +97,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& OutHitLocation, FV
 			HitResult,
 			StartLocation,
 			EndLocation,
-			ECollisionChannel::ECC_Visibility))
+			ECollisionChannel::ECC_Camera))
 	{
 		OutHitLocation = HitResult.Location;
 		return true;

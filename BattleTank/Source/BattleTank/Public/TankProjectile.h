@@ -46,6 +46,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float DamageAmount = 20.f; //sensible value
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DamageRadius = 100.f; //sensible value
+
 	UTankProjectileMovementComponent* ProjectileMovement = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Collision")

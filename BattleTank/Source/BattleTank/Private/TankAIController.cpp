@@ -15,17 +15,21 @@ void ATankAIController::Tick(float DeltaTime)
 	if (!ensure(PlayerTank) && !ensure(ControlledTank)) { return; }
 	
 	//Move towards the player
-	MoveToActor(PlayerTank, AcceptanceRadius); // radius in cm
-
-	//Aim Towards the player
-	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) { return; }
-	AimingComponent->AimAt(PlayerTank->GetActorLocation()); //Aim using location returned from AI Functions
-
-	//Fire if ready
-	if (AimingComponent->GetFiringState() == EFiringState::Locked)
+	if (PlayerTank) //double check because ensure may work only once
 	{
-		AimingComponent->Fire();
+		MoveToActor(PlayerTank, AcceptanceRadius); // radius in cm
+
+		//Aim Towards the player
+		auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+		if (!ensure(AimingComponent)) { return; }
+		auto AimPoint = PlayerTank->GetActorLocation() + FVector(0, 0, 40); //Making AI shooting upper than root pivot from object
+		AimingComponent->AimAt(AimPoint); //Aim using location returned from AI Functions
+
+		//Fire if ready
+		if (AimingComponent->GetFiringState() == EFiringState::Locked)
+		{
+			AimingComponent->Fire();
+		}
 	}
 }
 
@@ -49,6 +53,7 @@ void ATankAIController::SetPawn(APawn * InPawn)
 
 void ATankAIController::OnTankDeath()
 {
-	auto TankName = GetPawn()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s : Yeah, I'm Dead... "), *TankName)
+	auto PossessedTank = Cast<ATank>(GetPawn());
+	if (!ensure(PossessedTank)) { return; }
+	PossessedTank->DetachFromControllerPendingDestroy();
 }

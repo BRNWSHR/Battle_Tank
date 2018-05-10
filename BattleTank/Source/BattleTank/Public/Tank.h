@@ -31,6 +31,9 @@ private:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	// Sets the health value at beginplay
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
 

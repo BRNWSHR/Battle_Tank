@@ -73,3 +73,7 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+#cosmectic files
+Content/Procedural_Ecosystem/*
+Content/Bou_F1/*
