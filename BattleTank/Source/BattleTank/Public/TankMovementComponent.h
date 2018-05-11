@@ -6,7 +6,9 @@
 #include "GameFramework/NavMovementComponent.h"
 #include "TankMovementComponent.generated.h"
 
+//forward declarations
 class UTankTrack;
+
 /**
  * Responsible for driving the tank tracks (Fly-By-Wire system)
  */

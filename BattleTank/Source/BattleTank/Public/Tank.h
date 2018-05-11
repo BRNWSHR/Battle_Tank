@@ -6,7 +6,15 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+
+//delegates
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
+//forward declarations
+class UTankTrack;
+class UStaticMeshComponent;
+class USoundCue;
+class UAudioComponent;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -34,9 +42,20 @@ private:
 	// Sets the health value at beginplay
 	virtual void BeginPlay() override;
 
+	virtual void Tick(float DeltaTime) override;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Health")
 	int32 CurrentHealth = StartingHealth;
+
+	//Sound Component for Tank engine
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* TankEngineAudioComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundCue* TankEngineSound = nullptr;
+
+	UTankTrack* TankTrack = nullptr;
 };

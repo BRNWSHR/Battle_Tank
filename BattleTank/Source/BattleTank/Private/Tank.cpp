@@ -1,17 +1,16 @@
 // Copyright Le Saut A Pixels.
 
 #include "Tank.h"
-
-float ATank::GetHealthPercentage() const
-{
-	return (float)CurrentHealth / (float)StartingHealth;
-}
+#include "Components/AudioComponent.h"
+#include"Components/StaticMeshComponent.h"
+#include "Sound/SoundCue.h"
+#include "TankTrack.h"
 
 // Sets default values
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void ATank::BeginPlay()
@@ -19,7 +18,31 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 	//Be sure that current Health equals the Starting Health edited in BP
 	CurrentHealth = StartingHealth;
+
+	TankEngineAudioComponent = FindComponentByClass<UAudioComponent>();
+	if (!ensure(TankEngineAudioComponent) && !ensure(TankEngineSound)) { return; }
+
+	const float StartTime = 5.f;
+	const float Volume = 0.5f;
+	const float fadeTime = 2.0f;
+
+	TankEngineAudioComponent->SetSound(TankEngineSound);
+	TankEngineAudioComponent->FadeIn(fadeTime, Volume, StartTime);
 }
+
+void ATank::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	//calculating speed of the tank
+	TankTrack = FindComponentByClass<UTankTrack>();
+	if (!ensure(TankTrack)) { return; }
+	float RPM = TankTrack->GetComponentVelocity().GetAbsMax();;
+
+	//Populating speed modifications to audio
+	if (!ensure(TankEngineAudioComponent)) { return; }
+	TankEngineAudioComponent->SetFloatParameter(FName("Pitch"), RPM);
+}
+
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
 {
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
@@ -31,9 +54,11 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 	{
 		OnDeath.Broadcast();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Damage Amount on %s : %f"), *Name, DamageAmount)
-	UE_LOG(LogTemp, Warning, TEXT("Damage To Apply on %s : %i"), *Name, DamageToApply)
-	UE_LOG(LogTemp, Warning, TEXT("Current Health on %s : %i"), *Name, CurrentHealth)
 
 	return DamageToApply;
+}
+
+float ATank::GetHealthPercentage() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;
 }

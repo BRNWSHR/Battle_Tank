@@ -20,7 +20,8 @@ enum class EFiringState : uint8
 class UTankBarrel; 
 class UTankTurret;
 class ATankProjectile;
-
+class USoundCue;
+class UAudioComponent;
 
 // Holds barrel's properties
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -61,12 +62,16 @@ private:
 
 	void MoveBarrelAndTurretTowards(FVector AimDirection);
 
-	//Logic to check if Barrel is in aiming sate (EFiringState)
+	//Logic to check if Barrel is in aiming state (EFiringState)
+	UFUNCTION(BlueprintCallable)
 	bool IsBarrelMoving();
 
 
 	//Global to be callable from different methods
 	FVector AimDirection;
+
+	//Sound component for playing fire effect sound
+	UAudioComponent* FireSoundWrapper; //Actually not TankAudioComponent because it will override Tank engine sound, TODO find a better way to set that
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<ATankProjectile> ProjectileBP;
@@ -79,7 +84,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeinSeconds = 3;
-
-	double LastFireTime = 0;
 	
+	double LastFireTime = 0;
 };
